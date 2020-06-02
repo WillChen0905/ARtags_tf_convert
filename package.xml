@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-	<name> following_the_path </name>
+    <name> ARtags_tf_convert </name>
 	<version> 0.0.0 </version>
 	<description> The following_the_path package </description>
 	<maintainer email="will@todo.todo">will</maintainer>

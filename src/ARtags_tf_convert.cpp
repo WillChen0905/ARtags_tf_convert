@@ -5,11 +5,9 @@
 #include "geometry_msgs/Pose.h"
 #include "geometry_msgs/Twist.h"
 
+#include "tf2/utils.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
-
-
-
 
 
 class ARtags_tf_convert {
@@ -49,16 +47,16 @@ private:
             }
         }
 
-        std::cout << "Vel.x= " <<　Vel.linear.x << "  |  "
-                  << "Vel.y= " <<　Vel.linear.y << "  |  "
-                  << "Vel.th= " <<　Vel.angular.z << std::endl;
-        std::cout << "--------------------------------------------------------" << std::endl;
+//        std::cout << "Vel.x= " <<　Vel.linear.x << "  |  "
+//                  << "Vel.y= " <<　Vel.linear.y << "  |  "
+//                  << "Vel.th= " <<　Vel.angular.z << std::endl;
+//        std::cout << "--------------------------------------------------------" << std::endl;
 
         cmd_vel_pub_.publish( Vel );
 
     }
 
-    void CameraTFCB( const std::msgs::Strng& str )
+    void CameraTFCB( const std_msgs::String& str )
     {
         if ( !( str.data == "start" ) )
         {
@@ -93,13 +91,13 @@ private:
         geometry_msgs::Pose Tag_to_Aiv;
 
         tf2::doTransform( originTag, Tag_to_Aiv, transformStamped );
-        std::cout << "originTag.x= " <<　originTag.position.x << "  |  "
-                  << "Tag_to_Aiv.x= " <<　Tag_to_Aiv.position.x << std::endl;
-        std::cout << "originTag.y= " <<　originTag.position.y << "  |  "
-                  << "Tag_to_Aiv.y= " <<　Tag_to_Aiv.position.y << std::endl;
-        std::cout << "originTag.yaw= " <<　tf2::getYaw(originTag.orientation) << "  |  "
-                  << "Tag_to_Aiv.yaw= " <<　tf2::getYaw(Tag_to_Aiv.orientation) << std::endl;
-        // std::cout << "--------------------------------------------------------" << std::endl;
+//        std::cout << "originTag.x= " <<　originTag.position.x << "  |  "
+//                  << "Tag_to_Aiv.x= " <<　Tag_to_Aiv.position.x << std::endl;
+//        std::cout << "originTag.y= " <<　originTag.position.y << "  |  "
+//                  << "Tag_to_Aiv.y= " <<　Tag_to_Aiv.position.y << std::endl;
+//        std::cout << "originTag.yaw= " <<　tf2::getYaw(originTag.orientation) << "  |  "
+//                  << "Tag_to_Aiv.yaw= " <<　tf2::getYaw(Tag_to_Aiv.orientation) << std::endl;
+//        std::cout << "--------------------------------------------------------" << std::endl;
 
         VelocityPub( Tag_to_Aiv );
     }
@@ -109,3 +107,13 @@ private:
     ros::Subscriber camera_tf_sub_;
     ros::Publisher cmd_vel_pub_;
 };// end of class
+
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "ARtags_tf_convert");
+  ros::NodeHandle nh;
+  ARtags_tf_convert  TFC(nh);
+  ros::spin();
+  return 0;
+}
