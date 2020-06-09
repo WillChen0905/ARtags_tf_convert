@@ -84,12 +84,13 @@ private:
             camera_action_sub_.shutdown();
         }
 
-        camera_action_sub_ = nh_.subscribe( "ar_pose_marker", 10, &ARtags_tf_convert::CameraTFCB, this );
+        camera_tf_sub_ = nh_.subscribe( "ar_pose_marker", 10, &ARtags_tf_convert::CameraTFCB, this );
     }
 
 
     ros::NodeHandle nh_;
     ros::Subscriber camera_action_sub_;
+    ros::Subscriber camera_tf_sub_;
     ros::Publisher accuracy_pub_;
     ros::Publisher cmd_vel_pub_;
 };// end of class
